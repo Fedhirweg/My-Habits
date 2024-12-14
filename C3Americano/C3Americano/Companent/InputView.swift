@@ -9,15 +9,14 @@ import SwiftUI
 
 struct InputView: View {
     @Binding var text: String
-    
     let title: String
     let placeholder: String
     var isSecureField = false
     
     var body: some View {
-        VStack (alignment: .leading, spacing: 13){
+        VStack (alignment: .leading, spacing: 12) {
             Text(title)
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color(.darkGray))
                 .fontWeight(.semibold)
                 .font(.footnote)
             
@@ -34,5 +33,5 @@ struct InputView: View {
 }
 
 #Preview {
-    InputView(text: .constant(""), title: "Title", placeholder: "placeholder text", isSecureField: true)
+    InputView(text: .constant(""), title: "Email Address", placeholder: "example@example.com")
 }
