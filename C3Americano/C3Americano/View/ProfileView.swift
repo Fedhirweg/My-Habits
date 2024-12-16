@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var viewModel : AuthViewModel
-
+    @State private var showDeleteConfirmation = false
+    @State private var errorMessage: String?
+    
     
     var body: some View {
         if let user = viewModel.currentUser
@@ -61,14 +63,45 @@ struct ProfileView: View {
                         SettingsRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: .red)
                     }
                     
-                    Button{
-                        print("delete account")
+                    Button {
+                        showDeleteConfirmation = true
                     } label: {
                         SettingsRowView(imageName: "xmark.circle.fill", title: "Delete Account", tintColor: .red)
                     }
-                    
+                    .alert("Delete Account", isPresented: $showDeleteConfirmation) {
+                        Button("Delete", role: .destructive) {
+                            Task {
+                                await handleDeleteAccount()
+                            }
+                        }
+                        Button("Cancel", role: .cancel) {}
+                    } message: {
+                        Text("Are you sure you want to delete your account? This action cannot be undone.")
+                    }
                 }
             }
+        } else {
+            Text("Loading...")
+        }
+    }
+    
+    // Asynchronous function to handle account deletion
+    private func handleDeleteAccount() async {
+        do {
+            try await viewModel.deleteAccount()
+        } catch {
+            errorMessage = error.localizedDescription
+            showErrorAlert()
+        }
+    }
+    
+    // Error alert
+    private func showErrorAlert() {
+        guard let errorMessage else { return }
+        
+        DispatchQueue.main.async {
+            // Present the error message
+            print("Error: \(errorMessage)") //
         }
     }
 }

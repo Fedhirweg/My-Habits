@@ -18,6 +18,7 @@ protocol AuthenticationFormProtocol{
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
+    @Published var habits: [Habit] = []
     
     init() {
         self.userSession = Auth.auth().currentUser
@@ -63,7 +64,22 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func deleteAccount(){
+    func deleteAccount() async throws{
+        guard let user = Auth.auth().currentUser else {
+               throw NSError(domain: "NoUser", code: 401, userInfo: [NSLocalizedDescriptionKey: "No user is currently signed in."])
+           }
+           
+           // Delete user data from Firestore
+           try await Firestore.firestore().collection("users").document(user.uid).delete()
+           
+           // Delete the user account from Firebase Auth
+           try await user.delete()
+           
+           // Clear user session and current user
+           self.userSession = nil
+           self.currentUser = nil
+           
+           print("Debug: Account successfully deleted")
         
     }
     
@@ -74,5 +90,6 @@ class AuthViewModel: ObservableObject {
         
         print("Debug: Current user is \(self.currentUser?.fullname ?? "No user")")
     }
+
 }
 
