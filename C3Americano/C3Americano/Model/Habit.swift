@@ -1,7 +1,7 @@
 import Firebase
 import FirebaseFirestore
 
-struct Habit: Identifiable, Codable {
+struct Habit: Identifiable, Codable, Equatable {
     @DocumentID var id: String?
     let userId: String
     var title: String
@@ -9,6 +9,24 @@ struct Habit: Identifiable, Codable {
     var frequency: String // daily, weekly, monthly
     var completedDates: [Date]
     var createdAt: Date
+    var reminderTime: Date?
+    var isReminderEnabled: Bool
+    var selectedWeekday: Int?    // 1 (Sunday) through 7 (Saturday)
+    var selectedDayOfMonth: Int? // 1 through 31
+    
+    static func == (lhs: Habit, rhs: Habit) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.userId == rhs.userId &&
+        lhs.title == rhs.title &&
+        lhs.description == rhs.description &&
+        lhs.frequency == rhs.frequency &&
+        lhs.completedDates == rhs.completedDates &&
+        lhs.createdAt == rhs.createdAt &&
+        lhs.reminderTime == rhs.reminderTime &&
+        lhs.isReminderEnabled == rhs.isReminderEnabled &&
+        lhs.selectedWeekday == rhs.selectedWeekday &&
+        lhs.selectedDayOfMonth == rhs.selectedDayOfMonth
+    }
     
     var isCompletedToday: Bool {
         guard let lastCompletion = completedDates.last else { return false }

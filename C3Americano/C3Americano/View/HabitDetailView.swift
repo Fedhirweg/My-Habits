@@ -5,12 +5,22 @@ struct HabitDetailView: View {
     let habit: Habit
     @ObservedObject var viewModel: HabitViewModel
     @State private var showingDeleteAlert = false
+    @State private var showingEditSheet = false
+    @State private var showingReminderSettings = false
+    @State private var updatedHabit: Habit?
+    
+    private var currentHabit: Habit {
+        if let updated = updatedHabit {
+            return updated
+        }
+        return viewModel.habits.first(where: { $0.id == habit.id }) ?? habit
+    }
     
     private var completionsByMonth: [String: Int] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM yyyy"
         
-        return Dictionary(grouping: habit.completedDates) { date in
+        return Dictionary(grouping: currentHabit.completedDates) { date in
             dateFormatter.string(from: date)
         }.mapValues { $0.count }
     }
@@ -20,29 +30,29 @@ struct HabitDetailView: View {
             Section("Details") {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
-                        Text(habit.title)
+                        Text(currentHabit.title)
                             .font(.title2)
                             .bold()
                         
                         Spacer()
                         
                         Button(action: {
-                            viewModel.toggleHabitCompletion(habit: habit)
+                            viewModel.toggleHabitCompletion(habit: currentHabit)
                         }) {
-                            Image(systemName: habit.isCompletedToday ? "checkmark.circle.fill" : "circle")
-                                .foregroundColor(habit.isCompletedToday ? .green : .gray)
+                            Image(systemName: currentHabit.isCompletedToday ? "checkmark.circle.fill" : "circle")
+                                .foregroundColor(currentHabit.isCompletedToday ? .green : .gray)
                                 .imageScale(.large)
                         }
-                        .accessibilityLabel(habit.isCompletedToday ? "Mark as incomplete" : "Mark as complete")
+                        .accessibilityLabel(currentHabit.isCompletedToday ? "Mark as incomplete" : "Mark as complete")
                     }
                     
-                    Text(habit.description)
+                    Text(currentHabit.description)
                         .foregroundColor(.gray)
                     
-                    Text("Frequency: \(habit.frequency.capitalized)")
+                    Text("Frequency: \(currentHabit.frequency.capitalized)")
                         .font(.subheadline)
                     
-                    Text("Created: \(habit.createdAt.formatted(date: .abbreviated, time: .shortened))")
+                    Text("Created: \(currentHabit.createdAt.formatted(date: .abbreviated, time: .shortened))")
                         .font(.caption)
                 }
                 .padding(.vertical, 8)
@@ -50,9 +60,9 @@ struct HabitDetailView: View {
             
             Section {
                 HStack {
-                    StreakView(title: "Current Streak", count: habit.currentStreak)
+                    StreakView(title: "Current Streak", count: currentHabit.currentStreak)
                     Divider()
-                    StreakView(title: "Longest Streak", count: habit.longestStreak)
+                    StreakView(title: "Longest Streak", count: currentHabit.longestStreak)
                 }
                 .frame(height: 100)
             }
@@ -69,7 +79,7 @@ struct HabitDetailView: View {
             }
             
             Section("Recent Activity") {
-                ForEach(habit.completedDates.suffix(10).reversed(), id: \.self) { date in
+                ForEach(currentHabit.completedDates.suffix(10).reversed(), id: \.self) { date in
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
@@ -81,6 +91,17 @@ struct HabitDetailView: View {
             }
             
             Section {
+                Button {
+                    showingEditSheet = true
+                } label: {
+                    HStack {
+                        Image(systemName: "pencil")
+                        Text("Edit Habit")
+                    }
+                }
+                .accessibilityLabel("Edit habit")
+                .accessibilityHint("Double tap to modify this habit's details")
+                
                 Button(role: .destructive) {
                     showingDeleteAlert = true
                 } label: {
@@ -91,17 +112,46 @@ struct HabitDetailView: View {
                 }
                 .accessibilityLabel("Delete this habit")
                 .accessibilityHint("Double tap to delete this habit permanently")
+                
+                Button {
+                    showingReminderSettings = true
+                } label: {
+                    HStack {
+                        Image(systemName: "bell")
+                        Text("Reminder Settings")
+                        
+                        Spacer()
+                        
+                        if currentHabit.isReminderEnabled {
+                            Text(currentHabit.reminderTime?.formatted(date: .omitted, time: .shortened) ?? "")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                }
+                .accessibilityLabel("Reminder settings")
+                .accessibilityHint("Set up daily reminders for this habit")
             }
         }
         .navigationTitle("Habit History")
+        .sheet(isPresented: $showingEditSheet) {
+            EditHabitView(habit: currentHabit, viewModel: viewModel)
+        }
         .alert("Delete Habit", isPresented: $showingDeleteAlert) {
             Button("Cancel", role: .cancel) { }
             Button("Delete", role: .destructive) {
-                viewModel.deleteHabit(habit)
+                viewModel.deleteHabit(currentHabit)
                 dismiss()
             }
         } message: {
             Text("Are you sure you want to delete this habit? This action cannot be undone.")
+        }
+        .sheet(isPresented: $showingReminderSettings) {
+            ReminderSettingsView(habit: currentHabit, viewModel: viewModel)
+        }
+        .onChange(of: viewModel.habits) { _ in
+            if let updated = viewModel.habits.first(where: { $0.id == habit.id }) {
+                updatedHabit = updated
+            }
         }
     }
 }

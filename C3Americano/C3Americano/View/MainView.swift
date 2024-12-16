@@ -23,7 +23,6 @@ struct MainView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // Frequency Picker
                 Picker("Frequency", selection: $selectedFrequency) {
                     ForEach(frequencies, id: \.self) { frequency in
                         Text(frequency.capitalized)
@@ -35,14 +34,19 @@ struct MainView: View {
                 .padding()
                 .accessibilityLabel("Filter habits by frequency")
                 
-                // Habits List
                 List {
-                    ForEach(filteredHabits) { habit in
-                        HabitRowView(habit: habit, viewModel: habitViewModel)
-                    }
-                    .onDelete { indexSet in
-                        for index in indexSet {
-                            habitViewModel.deleteHabit(filteredHabits[index])
+                    if filteredHabits.isEmpty {
+                        Text("No \(selectedFrequency) habits yet")
+                            .foregroundColor(.gray)
+                            .italic()
+                    } else {
+                        ForEach(filteredHabits) { habit in
+                            HabitRowView(habit: habit, viewModel: habitViewModel)
+                        }
+                        .onDelete { indexSet in
+                            for index in indexSet {
+                                habitViewModel.deleteHabit(filteredHabits[index])
+                            }
                         }
                     }
                 }
@@ -52,19 +56,24 @@ struct MainView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     if let user = authViewModel.currentUser {
-                        NavigationLink(destination: ProfileView()) {
+                        NavigationLink {
+                            ProfileView()
+                        } label: {
                             Text(user.initials)
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .frame(width: 40, height: 40)
                                 .background(Color(.systemGray3))
                                 .clipShape(Circle())
+                                .accessibilityLabel("View profile")
                         }
                     }
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: { showingAddHabit = true }) {
+                    Button {
+                        showingAddHabit = true
+                    } label: {
                         Image(systemName: "plus")
                             .accessibilityLabel("Add new habit")
                     }
