@@ -148,8 +148,8 @@ struct HabitDetailView: View {
         .sheet(isPresented: $showingReminderSettings) {
             ReminderSettingsView(habit: currentHabit, viewModel: viewModel)
         }
-        .onChange(of: viewModel.habits) { _ in
-            if let updated = viewModel.habits.first(where: { $0.id == habit.id }) {
+        .onChange(of: viewModel.habits) { oldValue, newValue in
+            if let updated = newValue.first(where: { $0.id == habit.id }) {
                 updatedHabit = updated
             }
         }
