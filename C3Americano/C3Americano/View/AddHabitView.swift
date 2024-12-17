@@ -53,3 +53,7 @@ struct AddHabitView: View {
         }
     }
 } 
+
+#Preview {
+    AddHabitView(viewModel: HabitViewModel())
+}

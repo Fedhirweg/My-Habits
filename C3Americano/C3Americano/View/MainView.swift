@@ -26,6 +26,7 @@ struct MainView: View {
                 Picker("Frequency", selection: $selectedFrequency) {
                     ForEach(frequencies, id: \.self) { frequency in
                         Text(frequency.capitalized)
+                            .foregroundColor(.custompurple)
                             .tag(frequency)
                             .accessibilityLabel("\(frequency) habits")
                     }
@@ -53,6 +54,7 @@ struct MainView: View {
                 .listStyle(.plain)
             }
             .navigationTitle("My Habits")
+            .navigationBarTitleTextColor(.custompurple)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     if let user = authViewModel.currentUser {
@@ -75,6 +77,7 @@ struct MainView: View {
                         showingAddHabit = true
                     } label: {
                         Image(systemName: "plus")
+                            .foregroundStyle(.custompurple)
                             .accessibilityLabel("Add new habit")
                     }
                 }
@@ -86,6 +89,16 @@ struct MainView: View {
         .onAppear {
             habitViewModel.fetchUserHabits()
         }
+    }
+}
+
+extension View {
+    @available(iOS 14, *)
+    func navigationBarTitleTextColor(_ color: Color) -> some View {
+        let uiColor = UIColor(color)
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: uiColor ]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: uiColor ]
+        return self
     }
 }
 

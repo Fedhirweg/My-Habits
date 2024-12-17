@@ -12,6 +12,7 @@ struct HabitRowView: View {
                         .font(.headline)
                     Text(habit.description)
                         .font(.subheadline)
+                        .italic()
                         .foregroundColor(.gray)
                     Text("Frequency: \(habit.frequency)")
                         .font(.caption)
@@ -23,7 +24,9 @@ struct HabitRowView: View {
                     viewModel.toggleHabitCompletion(habit: habit)
                 }) {
                     Image(systemName: habit.isCompletedToday ? "checkmark.circle.fill" : "circle")
-                        .foregroundColor(habit.isCompletedToday ? .green : .gray)
+                        .foregroundColor(
+                            habit.isCompletedToday ? Color(.customgreen) : .gray
+                        )
                         .imageScale(.large)
                 }
                 .buttonStyle(BorderlessButtonStyle())
@@ -37,3 +40,7 @@ struct HabitRowView: View {
         }
     }
 } 
+
+#Preview {
+    HabitRowView(habit: Habit.example, viewModel: HabitViewModel())
+}

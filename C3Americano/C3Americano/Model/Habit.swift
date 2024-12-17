@@ -93,4 +93,19 @@ struct Habit: Identifiable, Codable, Equatable {
         
         return max(longest, current)
     }
-} 
+}
+
+extension Habit {
+    static var example = Habit(
+        id: "123",
+        userId: "abc",
+        title: "Example Habit",
+        description: "This is an example habit.",
+        frequency: "daily",
+        completedDates: [],
+        createdAt: Date(),
+        reminderTime: nil,
+        isReminderEnabled: false,
+        selectedWeekday: nil,
+        selectedDayOfMonth: nil)
+}

@@ -178,3 +178,7 @@ struct StreakView: View {
         .accessibilityLabel("\(title): \(count) days")
     }
 } 
+
+#Preview {
+    HabitDetailView(habit: Habit.example, viewModel: HabitViewModel())
+}

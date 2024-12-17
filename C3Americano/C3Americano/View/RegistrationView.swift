@@ -20,10 +20,10 @@ struct RegistrationView: View {
     var body: some View {
         VStack {
             // app icon image
-            Image("placeholder-logo")
+            Image("logo")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 100, height: 100)
+                .frame(width: 200, height: 200)
                 .padding(.vertical, 32)
             
             
@@ -43,7 +43,7 @@ struct RegistrationView: View {
                             Image(systemName: "checkmark.circle.fill")
                                 .imageScale(.large)
                                 .fontWeight(.bold)
-                                .foregroundStyle(Color(.systemGreen))
+                                .foregroundStyle(Color(.customgreen))
                         } else {
                             Image(systemName: "xmark.circle.fill")
                                 .imageScale(.large)
@@ -71,7 +71,7 @@ struct RegistrationView: View {
                 .foregroundStyle(.white)
                 .frame(width: UIScreen.main.bounds.width - 32, height: 48)
             }
-            .background(Color(.systemBlue))
+            .background(Color(.custompurple))
             .disabled(!formIsValid)
             .opacity(formIsValid ? 1 : 0.5)
             .cornerRadius(10)

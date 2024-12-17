@@ -67,3 +67,7 @@ struct EditHabitView: View {
         }
     }
 } 
+
+#Preview {
+    EditHabitView(habit: Habit.example, viewModel: HabitViewModel())
+}
