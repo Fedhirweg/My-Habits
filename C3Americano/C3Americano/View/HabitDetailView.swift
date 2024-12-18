@@ -40,7 +40,9 @@ struct HabitDetailView: View {
                             viewModel.toggleHabitCompletion(habit: currentHabit)
                         }) {
                             Image(systemName: currentHabit.isCompletedToday ? "checkmark.circle.fill" : "circle")
-                                .foregroundColor(currentHabit.isCompletedToday ? .green : .gray)
+                                .foregroundColor(
+                                    currentHabit.isCompletedToday ? Color(.customgreen) : .gray
+                                )
                                 .imageScale(.large)
                         }
                         .accessibilityLabel(currentHabit.isCompletedToday ? "Mark as incomplete" : "Mark as complete")
@@ -60,9 +62,17 @@ struct HabitDetailView: View {
             
             Section {
                 HStack {
-                    StreakView(title: "Current Streak", count: currentHabit.currentStreak)
+                    StreakView(
+                        title: "Current Streak",
+                        count: currentHabit.currentStreak,
+                        frequency: currentHabit.frequency
+                    )
                     Divider()
-                    StreakView(title: "Longest Streak", count: currentHabit.longestStreak)
+                    StreakView(
+                        title: "Longest Streak",
+                        count: currentHabit.longestStreak,
+                        frequency: currentHabit.frequency
+                    )
                 }
                 .frame(height: 100)
             }
@@ -79,10 +89,10 @@ struct HabitDetailView: View {
             }
             
             Section("Recent Activity") {
-                ForEach(currentHabit.completedDates.suffix(10).reversed(), id: \.self) { date in
+                ForEach(currentHabit.completedDates.sorted(by: >).prefix(10), id: \.self) { date in
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.green)
+                            .foregroundColor(Color(.customgreen))
                         Text(date.formatted(date: .abbreviated, time: .shortened))
                     }
                     .accessibilityElement(children: .combine)
@@ -159,6 +169,20 @@ struct HabitDetailView: View {
 struct StreakView: View {
     let title: String
     let count: Int
+    let frequency: String
+    
+    private var periodLabel: String {
+        switch frequency {
+        case "daily":
+            return count == 1 ? "day" : "days"
+        case "weekly":
+            return count == 1 ? "week" : "weeks"
+        case "monthly":
+            return count == 1 ? "month" : "months"
+        default:
+            return "days"
+        }
+    }
     
     var body: some View {
         VStack {
@@ -169,13 +193,13 @@ struct StreakView: View {
             Text("\(count)")
                 .font(.system(size: 44, weight: .bold))
             
-            Text("days")
+            Text(periodLabel)
                 .font(.caption2)
                 .foregroundColor(.gray)
         }
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(title): \(count) days")
+        .accessibilityLabel("\(title): \(count) \(periodLabel)")
     }
 } 
 

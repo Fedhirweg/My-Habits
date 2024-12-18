@@ -4,8 +4,18 @@ struct HabitRowView: View {
     let habit: Habit
     let viewModel: HabitViewModel
     
+    private var completionImage: String {
+        habit.isCompleted ? "checkmark.circle.fill" : "circle"
+    }
+    
+    private var completionColor: Color {
+        habit.isCompleted ? Color(.customgreen) : .gray
+    }
+    
     var body: some View {
-        NavigationLink(destination: HabitDetailView(habit: habit, viewModel: viewModel)) {
+        NavigationLink {
+            HabitDetailView(habit: habit, viewModel: viewModel)
+        } label: {
             HStack {
                 VStack(alignment: .leading) {
                     Text(habit.title)
@@ -14,32 +24,29 @@ struct HabitRowView: View {
                         .font(.subheadline)
                         .italic()
                         .foregroundColor(.gray)
-                    Text("Frequency: \(habit.frequency)")
-                        .font(.caption)
+                    //Text("Frequency: \(habit.frequency)")
+                      //  .font(.caption)
                 }
                 
                 Spacer()
                 
-                Button(action: {
+                Button {
                     viewModel.toggleHabitCompletion(habit: habit)
-                }) {
-                    Image(systemName: habit.isCompletedToday ? "checkmark.circle.fill" : "circle")
-                        .foregroundColor(
-                            habit.isCompletedToday ? Color(.customgreen) : .gray
-                        )
+                } label: {
+                    Image(systemName: completionImage)
+                        .foregroundColor(completionColor)
                         .imageScale(.large)
                 }
-                .buttonStyle(BorderlessButtonStyle())
-                .accessibilityLabel(habit.isCompletedToday ? "Mark \(habit.title) as incomplete" : "Mark \(habit.title) as complete")
+                .buttonStyle(.borderless)
             }
             .padding(.vertical, 8)
-            .accessibilityElement(children: .combine)
-            .accessibilityLabel("\(habit.title), \(habit.frequency) habit")
-            .accessibilityHint("Double tap to view details")
-            .accessibilityValue(habit.description)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(habit.title), \(habit.frequency) habit")
+        .accessibilityHint("Double tap to view details")
+        .accessibilityValue(habit.description)
     }
-} 
+}
 
 #Preview {
     HabitRowView(habit: Habit.example, viewModel: HabitViewModel())
