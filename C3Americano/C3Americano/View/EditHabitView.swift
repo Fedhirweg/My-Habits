@@ -46,6 +46,7 @@ struct EditHabitView: View {
                 }
             }
             .navigationTitle("Edit Habit")
+            .navigationBarTitleTextColor(.custompurple)
             .navigationBarItems(
                 leading: Button("Cancel") { dismiss() },
                 trailing: Button("Save") {

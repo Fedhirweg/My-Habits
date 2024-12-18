@@ -113,3 +113,7 @@ struct ReminderSettingsView: View {
         }
     }
 } 
+
+#Preview {
+    ReminderSettingsView(habit: .example, viewModel: HabitViewModel())
+}
