@@ -83,10 +83,6 @@ My Habits is a modern iOS habit tracking application built with SwiftUI that hel
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgments
 
 -   Firebase for backend services
