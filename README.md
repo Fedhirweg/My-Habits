@@ -1,8 +1,16 @@
-# My Habits - Habit Tracking App
+```markdown
+# Americano-AhmetHaydarIsik
+
+My Habits - Challenge 3 Americano
+
+[![Stars](https://img.shields.io/github/stars/Fedhirweg/Americano-AhmetHaydarIsik?style=social)](https://github.com/Fedhirweg/Americano-AhmetHaydarIsik/stargazers)
+[![Forks](https://img.shields.io/github/forks/Fedhirweg/Americano-AhmetHaydarIsik?style=social)](https://github.com/Fedhirweg/Americano-AhmetHaydarIsik/network/members)
+[![Open Issues](https://img.shields.io/github/issues/Fedhirweg/Americano-AhmetHaydarIsik)](https://github.com/Fedhirweg/Americano-AhmetHaydarIsik/issues)
+[![Last Updated](https://img.shields.io/github/last-commit/Fedhirweg/Americano-AhmetHaydarIsik)](https://github.com/Fedhirweg/Americano-AhmetHaydarIsik/commits/main)
 
 My Habits is a modern iOS habit tracking application built with SwiftUI that helps users build and maintain positive habits. The app features a clean, intuitive interface and powerful tracking capabilities.
 
-## Features
+## ✨ Features
 
 ### Authentication
 - Secure email/password authentication
@@ -19,10 +27,10 @@ My Habits is a modern iOS habit tracking application built with SwiftUI that hel
 
 ### Reminders
 - Customizable notifications for habits
-- Frequency-based reminder settings
-  - Daily reminders at specific times
-  - Weekly reminders on chosen days
-  - Monthly reminders on selected dates
+- Frequency-based reminder settings:
+    - Daily reminders at specific times
+    - Weekly reminders on chosen days
+    - Monthly reminders on selected dates
 - Enable/disable reminders per habit
 
 ### Statistics & Tracking
@@ -37,74 +45,62 @@ My Habits is a modern iOS habit tracking application built with SwiftUI that hel
 - Semantic accessibility labels
 - Clear navigation hints
 
-## Technical Details
+## 🛠️ Installation
 
-### Architecture
-- MVVM (Model-View-ViewModel) architecture
-- SwiftUI for modern UI development
-- Firebase for backend services
-- Combine for reactive programming
-
-### Technologies Used
-- Swift 5.9+
-- SwiftUI
-- Firebase Authentication
-- Cloud Firestore
-- UserNotifications framework
-
-### Key Components
-- `AuthViewModel`: Handles user authentication and session management
-- `HabitViewModel`: Manages habit data and operations
-- `NotificationManager`: Handles local notifications and reminders
-- Custom views for habit management and tracking
-
-## Requirements
+### Prerequisites
 
 - iOS 17.0+
 - Xcode 15.0+
 - Firebase account and configuration
 - Push Notification capability
 
-## Installation
+### Steps
 
-1. Clone the repository 
+1.  Clone the repository:
 
-2. Install Firebase dependencies
+    ```bash
+    git clone https://github.com/Fedhirweg/Americano-AhmetHaydarIsik.git
+    ```
 
-3. Add your Firebase configuration file (`GoogleService-Info.plist`)
+2.  Install Firebase dependencies (using Swift Package Manager in Xcode).
 
-4. Open `C3Americano.xcworkspace` in Xcode
+3.  Add your Firebase configuration file (`GoogleService-Info.plist`).
 
-5. Build and run the project
+4.  Open `C3Americano.xcworkspace` in Xcode.
 
-## Configuration
+5.  Build and run the project.
+
+## ⚙️ Configuration
 
 ### Firebase Setup
-1. Create a new Firebase project
-2. Enable Authentication with Email/Password
-3. Set up Cloud Firestore
-4. Download and add `GoogleService-Info.plist`
+
+1.  Create a new Firebase project.
+2.  Enable Authentication with Email/Password.
+3.  Set up Cloud Firestore.
+4.  Download and add `GoogleService-Info.plist` to the project.
 
 ### Push Notifications
-1. Enable Push Notifications in Xcode capabilities
-2. Configure notification permissions in Info.plist
 
-## Contributing
+1.  Enable Push Notifications in Xcode capabilities.
+2.  Configure notification permissions in `Info.plist`.
+
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
+## 📜 License
 
-This project is licensed under the MIT License - see the LICENSE file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-- Firebase for backend services
-- Apple's SwiftUI framework
-- The iOS development community
+-   Firebase for backend services
+-   Apple's SwiftUI framework
+-   The iOS development community
 
-## Contact
+## 📧 Contact
 
-Ahmet Haydar ISIK - avahmethaydarisik@gmail.com
+Ahmet Haydar IŞIK - avahmethaydarisik@gmail.com
 
-Project Link: [https://github.com/Fedhirweg/C3Americano]
+Project Link: [https://github.com/Fedhirweg/Americano-AhmetHaydarIsik](https://github.com/Fedhirweg/Americano-AhmetHaydarIsik)
+```
