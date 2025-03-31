@@ -3,11 +3,6 @@
 
 My Habits - Challenge 3 Americano
 
-[![Stars](https://img.shields.io/github/stars/Fedhirweg/Americano-AhmetHaydarIsik?style=social)](https://github.com/Fedhirweg/Americano-AhmetHaydarIsik/stargazers)
-[![Forks](https://img.shields.io/github/forks/Fedhirweg/Americano-AhmetHaydarIsik?style=social)](https://github.com/Fedhirweg/Americano-AhmetHaydarIsik/network/members)
-[![Open Issues](https://img.shields.io/github/issues/Fedhirweg/Americano-AhmetHaydarIsik)](https://github.com/Fedhirweg/Americano-AhmetHaydarIsik/issues)
-[![Last Updated](https://img.shields.io/github/last-commit/Fedhirweg/Americano-AhmetHaydarIsik)](https://github.com/Fedhirweg/Americano-AhmetHaydarIsik/commits/main)
-
 My Habits is a modern iOS habit tracking application built with SwiftUI that helps users build and maintain positive habits. The app features a clean, intuitive interface and powerful tracking capabilities.
 
 ## ✨ Features
