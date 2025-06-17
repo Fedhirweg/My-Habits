@@ -1,7 +1,5 @@
 ```markdown
-# Americano-AhmetHaydarIsik
-
-My Habits - Challenge 3 Americano
+My Habits
 
 My Habits is a modern iOS habit tracking application built with SwiftUI that helps users build and maintain positive habits. The app features a clean, intuitive interface and powerful tracking capabilities.
 
